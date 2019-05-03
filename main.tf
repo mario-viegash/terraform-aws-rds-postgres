@@ -12,7 +12,7 @@ locals {
   # Change default values for read replica instance
   is_read_replica         = "${var.replicate_source_db == "" ? false : true}"
   username                = "${local.is_read_replica ? "" : var.username}"
-  password                = "${local.is_read_replica ? "" : (var.snapshot_identifier == "" ? random_id.password.hex : "")}"
+  password                = "${local.is_read_replica ? "" : var.password}"
   multi_az                = "${var.multi_az}"
   backup_retention_period = "${local.is_read_replica ? 0 : var.backup_retention_period}"
   skip_final_snapshot     = "${local.is_read_replica ? true : var.skip_final_snapshot}"
@@ -48,7 +48,7 @@ resource "aws_db_instance" "this" {
   engine_version = "${var.engine_version}"
   instance_class = "${var.instance_class}"
   username       = "${var.username}"
-  password       = "${local.password}"
+  password       = "${var.password}"
   port           = "${var.port}"
 
   allocated_storage = "${var.allocated_storage}"
@@ -63,7 +63,7 @@ resource "aws_db_instance" "this" {
   ]
 
   multi_az            = "${local.multi_az}"
-  publicly_accessible = false
+  publicly_accessible = "${var.publicly_accessible}"
 
   db_subnet_group_name = "${var.db_subnet_group_name}"
   parameter_group_name = "${var.parameter_group_name}"

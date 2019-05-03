@@ -41,6 +41,12 @@ variable "username" {
   default     = "postgres"
 }
 
+variable "password" {
+  type        = "string"
+  description = "Password for the master DB user"
+  default     = "postgres"
+}
+
 variable "port" {
   type        = "string"
   description = "The port on which the DB accepts connections"
@@ -107,6 +113,12 @@ variable "multi_az" {
   type        = "string"
   description = "Specifies if the RDS instance is multi-AZ"
   default     = "true"
+}
+
+variable "publicly_accessible" {
+  type        = "string"
+  description = "Specifies if the RDS instance want to publicly or not"
+  default     = "false"
 }
 
 variable "allow_major_version_upgrade" {
